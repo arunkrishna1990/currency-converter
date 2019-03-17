@@ -14,7 +14,7 @@ $ npm i
 
 ### Start demo
 ```bash
-$ npm start (This will start the ui)
+$ npm start
 ```
 
 ### Run tests
