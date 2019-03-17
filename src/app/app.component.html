@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-form-field class="base-currency-wrapper">
+    <label>Base Currency</label>
+    <mat-select #selectedBaseCurrency [value]="default"
+      (selectionChange)="onBaseCurrencyChanged(selectedBaseCurrency.value)">
+      <mat-option *ngFor="let currency of currencies$ | async" [value]="currency.code">
+        {{currency.code}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="target-currency-wrapper">
+    <label>Target Currency</label>
+    <mat-select #selectedTarget>
+      <mat-option *ngFor="let currency of currencies$ | async" [value]="currency">{{currency.code}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input id="enter-amount" matInput type="text" placeholder="Enter Amount" autocomplete="off" #inputAmount>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="calculate(inputAmount.value, selectedTarget.value.rate)">Convert
+    Amount</button>
+
+  <span id='converted-amount'>Converted Amount:
+    {{calculatedAmount | currency:selectedTarget.value && selectedTarget.value.code:'code':'2.2-2': locale}}</span>
+</mat-card>
+
+<mat-list class="rate-list">
+  <mat-list-item *ngFor="let currency of currencies$|async">
+    {{currency.rate | currency:currency.code:'code':'2.2-2': locale}}
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
